@@ -3,6 +3,7 @@ import './App.css'
 import ChatWindow from './ChatWindow'
 import Sidebar from './Sidebar';
 import { v1 as uuid1} from "uuid";
+import BACKEND_URL from './environment.js';
 
 function App() {
   let [threadId, setThreadId] = useState(uuid1());
@@ -11,7 +12,7 @@ function App() {
 
     const getAllThreads = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/thread");
+        const response = await fetch(`${BACKEND_URL}/api/v1/thread`);
         const res = await response.json();
         const filteredResponse = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
         setAllThreads(filteredResponse);
@@ -33,7 +34,7 @@ function App() {
 
     const changeThread = async (thread_id) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/v1/thread/${thread_id}`);
+        const response = await fetch(`${BACKEND_URL}/api/v1/thread/${thread_id}`);
         const res = await response.json();
         setThreadChats(res);
         setThreadId(thread_id);
@@ -47,7 +48,7 @@ function App() {
     const deleteThread = async (thread_id) => {
       try {
           await fetch(
-              `http://localhost:3000/api/v1/thread/${thread_id}`,
+              `${BACKEND_URL}/api/v1/thread/${thread_id}`,
               {
                   method: "DELETE"
               }

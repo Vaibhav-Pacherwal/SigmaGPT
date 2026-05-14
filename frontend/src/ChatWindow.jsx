@@ -3,6 +3,7 @@ import Chat from "./Chat";
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import { v1 as uuid1} from "uuid";
+import BACKEND_URL from "./environment.js";
 
 export default function ChatWindow({currThreadId, threadChats}) {
     let [prompt, setPrompt] = useState("");
@@ -25,7 +26,7 @@ export default function ChatWindow({currThreadId, threadChats}) {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/chat", options);
+            const response = await fetch(`${BACKEND_URL}/api/v1/chat`, options);
             const res = await response.json();
             setReply(res.reply);
             console.log(res);
